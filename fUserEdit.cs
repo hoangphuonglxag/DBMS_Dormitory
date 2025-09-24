@@ -70,5 +70,10 @@ namespace project
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void cboGender_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

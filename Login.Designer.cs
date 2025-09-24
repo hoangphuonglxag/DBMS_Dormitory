@@ -87,7 +87,7 @@
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(52)))), ((int)(((byte)(98)))));
             this.lblTitle.Location = new System.Drawing.Point(212, 28);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(195, 38);
+            this.lblTitle.Size = new System.Drawing.Size(188, 38);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "ĐĂNG NHẬP";
             // 
@@ -98,7 +98,7 @@
             this.lblUsername.ForeColor = System.Drawing.Color.Gray;
             this.lblUsername.Location = new System.Drawing.Point(215, 80);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(125, 23);
+            this.lblUsername.Size = new System.Drawing.Size(124, 23);
             this.lblUsername.TabIndex = 6;
             this.lblUsername.Text = "Tên đăng nhập";
             // 

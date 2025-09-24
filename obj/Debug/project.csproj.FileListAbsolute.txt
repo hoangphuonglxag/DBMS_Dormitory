@@ -42,3 +42,4 @@ D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.csproj.CoreCompileInpu
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.csproj.Up2Date
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.exe
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.pdb
+D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.fUserEdit.resources

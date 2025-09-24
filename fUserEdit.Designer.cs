@@ -78,7 +78,7 @@
             this.lblStudentCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblStudentCode.Location = new System.Drawing.Point(31, 26);
             this.lblStudentCode.Name = "lblStudentCode";
-            this.lblStudentCode.Size = new System.Drawing.Size(127, 23);
+            this.lblStudentCode.Size = new System.Drawing.Size(128, 23);
             this.lblStudentCode.TabIndex = 8;
             this.lblStudentCode.Text = "Mã số sinh viên";
             // 
@@ -89,7 +89,7 @@
             this.lblFullName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblFullName.Location = new System.Drawing.Point(31, 95);
             this.lblFullName.Name = "lblFullName";
-            this.lblFullName.Size = new System.Drawing.Size(86, 23);
+            this.lblFullName.Size = new System.Drawing.Size(85, 23);
             this.lblFullName.TabIndex = 9;
             this.lblFullName.Text = "Họ và Tên";
             // 
@@ -127,7 +127,7 @@
             this.lblDob.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblDob.Location = new System.Drawing.Point(264, 164);
             this.lblDob.Name = "lblDob";
-            this.lblDob.Size = new System.Drawing.Size(89, 23);
+            this.lblDob.Size = new System.Drawing.Size(86, 23);
             this.lblDob.TabIndex = 11;
             this.lblDob.Text = "Ngày sinh";
             // 
@@ -174,6 +174,7 @@
             this.cboGender.Name = "cboGender";
             this.cboGender.Size = new System.Drawing.Size(120, 31);
             this.cboGender.TabIndex = 1;
+            this.cboGender.SelectedIndexChanged += new System.EventHandler(this.cboGender_SelectedIndexChanged);
             // 
             // dtpDob
             // 
@@ -216,6 +217,7 @@
             this.Load += new System.EventHandler(this.fUserEdit_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
         #endregion
 

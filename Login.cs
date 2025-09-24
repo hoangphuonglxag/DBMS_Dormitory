@@ -10,8 +10,6 @@ namespace project
         public Login()
         {
             InitializeComponent();
-            this.btnLogin.MouseEnter += (s, e) => { this.btnLogin.BackColor = System.Drawing.Color.FromArgb(41, 52, 98); };
-            this.btnLogin.MouseLeave += (s, e) => { this.btnLogin.BackColor = System.Drawing.Color.FromArgb(75, 135, 185); };
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -32,8 +30,6 @@ namespace project
                 using (SqlCommand cmd = new SqlCommand("sp_CheckLogin", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // SỬA Ở ĐÂY: Chỉ định rõ SqlDbType để đảm bảo khớp với Stored Procedure
                     cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = username;
                     cmd.Parameters.Add("@password", SqlDbType.NVarChar, 100).Value = password;
 
@@ -43,17 +39,26 @@ namespace project
                         if (reader.Read())
                         {
                             int userId = reader.GetInt32(0);
-                            string role = reader.GetString(1); // "admin" hoặc "user"
+                            string role = reader.GetString(1);
 
-                            // Lưu thông tin người dùng hiện tại
                             CurrentUserSession.UserId = userId;
                             CurrentUserSession.Username = username;
                             CurrentUserSession.Role = role;
 
-                            // Mở Dashboard
                             fServiceDashboard dashboard = new fServiceDashboard(userId, username, role);
-                            dashboard.Show();
                             this.Hide();
+                            dashboard.Show();
+
+                            // Xử lý việc đóng form:
+                            // Chỉ đóng form Login gốc (và thoát chương trình)
+                            // khi người dùng KHÔNG chủ động đăng xuất (tức là bấm nút X).
+                            dashboard.FormClosed += (s, args) =>
+                            {
+                                if (dashboard.isLoggingOut == false)
+                                {
+                                    this.Close();
+                                }
+                            };
                         }
                         else
                         {
@@ -76,7 +81,6 @@ namespace project
         }
     }
 
-    // Static class lưu thông tin user hiện tại
     public static class CurrentUserSession
     {
         public static int UserId { get; set; }

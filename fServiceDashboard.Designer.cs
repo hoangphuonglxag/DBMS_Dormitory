@@ -22,6 +22,7 @@
             this.btnViewMyBill = new System.Windows.Forms.Button();
             this.lblAppName = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.btnGenerateBill = new System.Windows.Forms.Button();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -135,6 +136,7 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.White;
+            this.panelHeader.Controls.Add(this.btnLogout);
             this.panelHeader.Controls.Add(this.btnGenerateBill);
             this.panelHeader.Controls.Add(this.lblWelcome);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -142,6 +144,22 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(962, 80);
             this.panelHeader.TabIndex = 1;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnLogout.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.Black;
+            this.btnLogout.Location = new System.Drawing.Point(822, 22);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(118, 35);
+            this.btnLogout.TabIndex = 2;
+            this.btnLogout.Text = "Đăng xuất";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnGenerateBill
             // 
@@ -151,7 +169,7 @@
             this.btnGenerateBill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGenerateBill.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerateBill.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateBill.Location = new System.Drawing.Point(790, 22);
+            this.btnGenerateBill.Location = new System.Drawing.Point(656, 22);
             this.btnGenerateBill.Name = "btnGenerateBill";
             this.btnGenerateBill.Size = new System.Drawing.Size(150, 35);
             this.btnGenerateBill.TabIndex = 1;
@@ -192,7 +210,7 @@
             this.groupPendingRequests.Controls.Add(this.dgvPendingRequests);
             this.groupPendingRequests.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupPendingRequests.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
-            this.groupPendingRequests.Location = new System.Drawing.Point(20, 680);
+            this.groupPendingRequests.Location = new System.Drawing.Point(20, 460);
             this.groupPendingRequests.Name = "groupPendingRequests";
             this.groupPendingRequests.Size = new System.Drawing.Size(922, 220);
             this.groupPendingRequests.TabIndex = 3;
@@ -249,7 +267,7 @@
             this.groupUsersByService.Controls.Add(this.dgvUsersByService);
             this.groupUsersByService.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupUsersByService.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupUsersByService.Location = new System.Drawing.Point(20, 460);
+            this.groupUsersByService.Location = new System.Drawing.Point(20, 240);
             this.groupUsersByService.Name = "groupUsersByService";
             this.groupUsersByService.Padding = new System.Windows.Forms.Padding(10);
             this.groupUsersByService.Size = new System.Drawing.Size(922, 220);
@@ -487,5 +505,6 @@
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.TextBox txtSearchService;
         private System.Windows.Forms.Button btnMyProfile;
+        private System.Windows.Forms.Button btnLogout;
     }
 }

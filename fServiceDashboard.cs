@@ -11,6 +11,7 @@ namespace project
         private string _username;
         private string _role;
         private DataProvider _dataProvider;
+        public bool isLoggingOut = false;
 
         public fServiceDashboard(int userId, string username, string role)
         {
@@ -43,6 +44,8 @@ namespace project
 
             btnViewMyBill.Visible = !isAdmin;
             btnMyProfile.Visible = !isAdmin;
+
+            btnLogout.Visible = true;
 
             if (isAdmin)
             {
@@ -246,6 +249,14 @@ namespace project
                 fMyProfile profileForm = new fMyProfile(_userId, _dataProvider);
                 profileForm.ShowDialog();
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            isLoggingOut = true;
+            Login loginForm = new Login();
+            loginForm.Show();
+            this.Close();
         }
 
         private void RegisterSingleService()
