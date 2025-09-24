@@ -1,0 +1,18 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build
+bin/
+obj/
+Release/
+Debug/
+
+# Packages
+packages/
+*.nupkg
+
+# System files
+*.log
+*.vsidx
