@@ -38,10 +38,11 @@ namespace project
             btnDeleteService.Visible = isAdmin;
             groupUsersByService.Visible = isAdmin;
             groupPendingRequests.Visible = isAdmin;
-
-            // Ẩn/hiện các nút mới
             btnGenerateBill.Visible = isAdmin;
-            btnViewMyBill.Visible = !isAdmin; // Chỉ user mới thấy nút xem hóa đơn của mình
+            btnUserManagement.Visible = isAdmin;
+
+            btnViewMyBill.Visible = !isAdmin;
+            btnMyProfile.Visible = !isAdmin;
 
             if (isAdmin)
             {
@@ -131,6 +132,23 @@ namespace project
             }
         }
 
+        private void txtSearchService_TextChanged(object sender, EventArgs e)
+        {
+            var dt = dgvAllServices.DataSource as DataTable;
+            if (dt != null)
+            {
+                string searchText = txtSearchService.Text.Trim().Replace("'", "''");
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    dt.DefaultView.RowFilter = $"service_name LIKE '%{searchText}%'";
+                }
+                else
+                {
+                    dt.DefaultView.RowFilter = string.Empty;
+                }
+            }
+        }
+
         private void btnApprove_Click(object sender, EventArgs e)
         {
             if (dgvPendingRequests.CurrentRow != null)
@@ -212,6 +230,21 @@ namespace project
                 {
                     MessageBox.Show("Lỗi khi tạo hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void btnUserManagement_Click(object sender, EventArgs e)
+        {
+            fUserManagement userManagementForm = new fUserManagement(_dataProvider);
+            userManagementForm.ShowDialog();
+        }
+
+        private void btnMyProfile_Click(object sender, EventArgs e)
+        {
+            if (_role == "user")
+            {
+                fMyProfile profileForm = new fMyProfile(_userId, _dataProvider);
+                profileForm.ShowDialog();
             }
         }
 

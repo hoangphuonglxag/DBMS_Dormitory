@@ -17,6 +17,8 @@
         private void InitializeComponent()
         {
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnMyProfile = new System.Windows.Forms.Button();
+            this.btnUserManagement = new System.Windows.Forms.Button();
             this.btnViewMyBill = new System.Windows.Forms.Button();
             this.lblAppName = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -33,6 +35,8 @@
             this.dgvMyServices = new System.Windows.Forms.DataGridView();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupAllServices = new System.Windows.Forms.GroupBox();
+            this.txtSearchService = new System.Windows.Forms.TextBox();
+            this.lblSearch = new System.Windows.Forms.Label();
             this.dgvAllServices = new System.Windows.Forms.DataGridView();
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnDeleteService = new System.Windows.Forms.Button();
@@ -54,6 +58,8 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(52)))), ((int)(((byte)(98)))));
+            this.panelMenu.Controls.Add(this.btnMyProfile);
+            this.panelMenu.Controls.Add(this.btnUserManagement);
             this.panelMenu.Controls.Add(this.btnViewMyBill);
             this.panelMenu.Controls.Add(this.lblAppName);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
@@ -61,6 +67,40 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(220, 833);
             this.panelMenu.TabIndex = 0;
+            // 
+            // btnMyProfile
+            // 
+            this.btnMyProfile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnMyProfile.FlatAppearance.BorderSize = 0;
+            this.btnMyProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMyProfile.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMyProfile.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnMyProfile.Location = new System.Drawing.Point(0, 200);
+            this.btnMyProfile.Name = "btnMyProfile";
+            this.btnMyProfile.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnMyProfile.Size = new System.Drawing.Size(220, 60);
+            this.btnMyProfile.TabIndex = 3;
+            this.btnMyProfile.Text = "Thông tin cá nhân";
+            this.btnMyProfile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMyProfile.UseVisualStyleBackColor = true;
+            this.btnMyProfile.Click += new System.EventHandler(this.btnMyProfile_Click);
+            // 
+            // btnUserManagement
+            // 
+            this.btnUserManagement.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUserManagement.FlatAppearance.BorderSize = 0;
+            this.btnUserManagement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUserManagement.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUserManagement.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnUserManagement.Location = new System.Drawing.Point(0, 140);
+            this.btnUserManagement.Name = "btnUserManagement";
+            this.btnUserManagement.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnUserManagement.Size = new System.Drawing.Size(220, 60);
+            this.btnUserManagement.TabIndex = 2;
+            this.btnUserManagement.Text = "Quản lý Sinh viên";
+            this.btnUserManagement.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUserManagement.UseVisualStyleBackColor = true;
+            this.btnUserManagement.Click += new System.EventHandler(this.btnUserManagement_Click);
             // 
             // btnViewMyBill
             // 
@@ -274,6 +314,8 @@
             // 
             // groupAllServices
             // 
+            this.groupAllServices.Controls.Add(this.txtSearchService);
+            this.groupAllServices.Controls.Add(this.lblSearch);
             this.groupAllServices.Controls.Add(this.dgvAllServices);
             this.groupAllServices.Controls.Add(this.btnRegister);
             this.groupAllServices.Controls.Add(this.btnDeleteService);
@@ -288,18 +330,40 @@
             this.groupAllServices.TabStop = false;
             this.groupAllServices.Text = "Tất Cả Dịch Vụ";
             // 
+            // txtSearchService
+            // 
+            this.txtSearchService.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchService.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchService.Location = new System.Drawing.Point(95, 32);
+            this.txtSearchService.Name = "txtSearchService";
+            this.txtSearchService.Size = new System.Drawing.Size(811, 27);
+            this.txtSearchService.TabIndex = 6;
+            this.txtSearchService.TextChanged += new System.EventHandler(this.txtSearchService_TextChanged);
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSearch.Location = new System.Drawing.Point(16, 35);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(73, 20);
+            this.lblSearch.TabIndex = 5;
+            this.lblSearch.Text = "Tìm kiếm:";
+            // 
             // dgvAllServices
             // 
             this.dgvAllServices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAllServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAllServices.Location = new System.Drawing.Point(16, 35);
+            this.dgvAllServices.Location = new System.Drawing.Point(16, 70);
             this.dgvAllServices.MultiSelect = true;
             this.dgvAllServices.Name = "dgvAllServices";
             this.dgvAllServices.RowHeadersWidth = 51;
             this.dgvAllServices.RowTemplate.Height = 24;
-            this.dgvAllServices.Size = new System.Drawing.Size(890, 120);
+            this.dgvAllServices.Size = new System.Drawing.Size(890, 85);
             this.dgvAllServices.TabIndex = 0;
             // 
             // btnRegister
@@ -390,6 +454,7 @@
             this.groupMyServices.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMyServices)).EndInit();
             this.groupAllServices.ResumeLayout(false);
+            this.groupAllServices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllServices)).EndInit();
             this.ResumeLayout(false);
 
@@ -418,5 +483,9 @@
         private System.Windows.Forms.Button btnReject;
         private System.Windows.Forms.Button btnViewMyBill;
         private System.Windows.Forms.Button btnGenerateBill;
+        private System.Windows.Forms.Button btnUserManagement;
+        private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.TextBox txtSearchService;
+        private System.Windows.Forms.Button btnMyProfile;
     }
 }

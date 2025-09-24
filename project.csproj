@@ -200,6 +200,12 @@
     <Compile Include="fMyBill.Designer.cs">
       <DependentUpon>fMyBill.cs</DependentUpon>
     </Compile>
+    <Compile Include="fMyProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMyProfile.Designer.cs">
+      <DependentUpon>fMyProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="fServiceDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +217,18 @@
     </Compile>
     <Compile Include="fServiceEdit.Designer.cs">
       <DependentUpon>fServiceEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fUserEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fUserEdit.Designer.cs">
+      <DependentUpon>fUserEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fUserManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fUserManagement.Designer.cs">
+      <DependentUpon>fUserManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -260,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

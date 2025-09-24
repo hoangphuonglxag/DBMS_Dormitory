@@ -15,7 +15,7 @@ namespace project
             _role = role;
         }
 
-        #region Service and Request Management
+        #region Service, Request, Billing Management
         public DataTable GetAllServices()
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -145,9 +145,7 @@ namespace project
                 cmd.ExecuteNonQuery();
             }
         }
-        #endregion
 
-        #region Billing System
         public void GenerateMonthlyUsage(int month, int year)
         {
             if (_role != "admin")
@@ -179,6 +177,121 @@ namespace project
                     da.Fill(dt);
                     return dt;
                 }
+            }
+        }
+        #endregion
+
+        #region User Management
+        public DataTable GetUsers()
+        {
+            if (_role != "admin")
+                throw new UnauthorizedAccessException("Chỉ admin mới có quyền xem thông tin này.");
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_GetUsers", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
+        public void CreateUser(string studentCode, string phone, string fullName, string gender, DateTime dob, string address, string initialPassword)
+        {
+            if (_role != "admin")
+                throw new UnauthorizedAccessException("Chỉ admin mới có quyền tạo người dùng.");
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_CreateUser", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@student_code", studentCode);
+                cmd.Parameters.AddWithValue("@phone", phone);
+                cmd.Parameters.AddWithValue("@fullName", fullName);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@dob", dob);
+                cmd.Parameters.AddWithValue("@address", address);
+                cmd.Parameters.AddWithValue("@initialPassword", initialPassword);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateUser(int userId, string studentCode, string phone, string fullName, string gender, DateTime dob, string address)
+        {
+            if (_role != "admin")
+                throw new UnauthorizedAccessException("Chỉ admin mới có quyền cập nhật người dùng.");
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_UpdateUser", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@student_code", studentCode);
+                cmd.Parameters.AddWithValue("@phone", phone);
+                cmd.Parameters.AddWithValue("@fullName", fullName);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@dob", dob);
+                cmd.Parameters.AddWithValue("@address", address);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void ToggleUserStatus(int userId, bool isActive)
+        {
+            if (_role != "admin")
+                throw new UnauthorizedAccessException("Chỉ admin mới có quyền thay đổi trạng thái người dùng.");
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_ToggleUserStatus", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@isActive", isActive);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void ResetPassword(int userId, string newPassword)
+        {
+            if (_role != "admin")
+                throw new UnauthorizedAccessException("Chỉ admin mới có quyền đặt lại mật khẩu.");
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_ResetPassword", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@newPassword", newPassword);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool ChangePassword(int userId, string oldPassword, string newPassword)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand("sp_ChangePassword", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@oldPassword", oldPassword);
+                cmd.Parameters.AddWithValue("@newPassword", newPassword);
+
+                var returnParameter = cmd.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                int result = (int)returnParameter.Value;
+                return result == 1;
             }
         }
         #endregion
