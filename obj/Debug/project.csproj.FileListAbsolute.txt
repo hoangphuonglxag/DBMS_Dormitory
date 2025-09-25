@@ -34,7 +34,6 @@ D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\bin\Debug\Sprache.xml
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.csproj.AssemblyReference.cache
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.fServiceDashboard.resources
-D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.Home.resources
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.Login.resources
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.Properties.Resources.resources
 D:\NguyenDinhTanLoc\dbms\DBMS_Dormitory\obj\Debug\project.csproj.GenerateResource.cache

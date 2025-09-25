@@ -1,4 +1,5 @@
-﻿using System;
+﻿// File: fServiceDashboard.cs
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,15 +14,22 @@ namespace project
         private DataProvider _dataProvider;
         public bool isLoggingOut = false;
 
-        public fServiceDashboard(int userId, string username, string role)
+        // Constructor đã được sửa lại để nhận connectionString
+        public fServiceDashboard(string connectionString, int userId, string username, string role)
         {
             InitializeComponent();
             _userId = userId;
             _username = username;
             _role = role;
             this.lblWelcome.Text = $"Xin chào, {_username} ({_role})";
-            _dataProvider = new DataProvider(DbConfig.GetConnectionString(), _role);
+
+            // Khởi tạo DataProvider với chuỗi kết nối được truyền vào
+            _dataProvider = new DataProvider(connectionString, _role);
         }
+
+        // ====================================================================
+        // PHẦN CODE BỊ THIẾU CỦA BẠN BẮT ĐẦU TỪ ĐÂY
+        // ====================================================================
 
         private void fServiceDashboard_Load(object sender, EventArgs e)
         {
@@ -78,22 +86,51 @@ namespace project
 
         private void LoadAllServices()
         {
-            DataTable dt = _dataProvider.GetAllServices();
-            dgvAllServices.DataSource = dt;
-            if (dgvAllServices.Columns.Contains("service_id"))
-                dgvAllServices.Columns["service_id"].Visible = false;
-            if (dgvAllServices.Columns.Contains("is_quantifiable"))
-                dgvAllServices.Columns["is_quantifiable"].Visible = false;
+            try
+            {
+                DataTable dt;
+
+                if (_role == "admin")
+                {
+                    // Admin được xem tất cả dịch vụ
+                    dt = _dataProvider.GetAllServices();
+                }
+                else
+                {
+                    // User chỉ được xem danh sách dịch vụ đã đăng ký hoặc khả dụng
+                    // Nếu bạn muốn user xem dịch vụ KHẢ DỤNG để đăng ký thêm -> dùng GetAvailableServices
+                    // Nếu chỉ xem dịch vụ đã đăng ký -> dùng GetRegistrationsByUser
+                    dt = _dataProvider.GetAvailableServices(_userId);
+                }
+
+                dgvAllServices.DataSource = dt;
+                if (dgvAllServices.Columns.Contains("service_id"))
+                    dgvAllServices.Columns["service_id"].Visible = false;
+                if (dgvAllServices.Columns.Contains("is_quantifiable"))
+                    dgvAllServices.Columns["is_quantifiable"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void LoadMyServices()
         {
-            DataTable dt = _dataProvider.GetRegistrationsByUser(_userId);
-            dgvMyServices.DataSource = dt;
-            if (dgvMyServices.Columns.Contains("service_id"))
-                dgvMyServices.Columns["service_id"].Visible = false;
-            if (dgvMyServices.Columns.Contains("request_id"))
-                dgvMyServices.Columns["request_id"].Visible = false;
+            try
+            {
+                DataTable dt = _dataProvider.GetRegistrationsByUser(_userId);
+                dgvMyServices.DataSource = dt;
+                if (dgvMyServices.Columns.Contains("service_id"))
+                    dgvMyServices.Columns["service_id"].Visible = false;
+                if (dgvMyServices.Columns.Contains("request_id"))
+                    dgvMyServices.Columns["request_id"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dịch vụ của bạn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadPendingRequests()
@@ -217,10 +254,8 @@ namespace project
         private void btnGenerateBill_Click(object sender, EventArgs e)
         {
             var today = DateTime.Now;
-            var confirm = MessageBox.Show($"Bạn có chắc muốn chốt số và tạo hóa đơn cho tháng {today.Month}/{today.Year}?\n\nLưu ý: Hành động này sẽ xóa và tạo lại toàn bộ dữ liệu hóa đơn của tháng này.",
-                                         "Xác nhận chốt số",
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Warning);
+            var confirm = MessageBox.Show($"Bạn có chắc muốn chốt số và tạo hóa đơn cho tháng {today.Month}/{today.Year}?",
+                                          "Xác nhận chốt số", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirm == DialogResult.Yes)
             {
@@ -254,9 +289,7 @@ namespace project
         private void btnLogout_Click(object sender, EventArgs e)
         {
             isLoggingOut = true;
-            Login loginForm = new Login();
-            loginForm.Show();
-            this.Close();
+            this.Close(); // Chỉ cần đóng form hiện tại, form Home sẽ quản lý việc mở lại Login
         }
 
         private void RegisterSingleService()
@@ -276,7 +309,7 @@ namespace project
 
                 if (!int.TryParse(input, out quantity) || quantity <= 0)
                 {
-                    MessageBox.Show("Số lượng không hợp lệ. Vui lòng nhập một số nguyên dương.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Số lượng không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -284,7 +317,8 @@ namespace project
             try
             {
                 _dataProvider.RegisterService(_userId, serviceId, quantity);
-                MessageBox.Show("Yêu cầu đăng ký đã được gửi đi và đang chờ phê duyệt.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Yêu cầu đăng ký đã được gửi.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadMyServices(); // Tải lại danh sách dịch vụ của tôi
             }
             catch (Exception ex)
             {
@@ -294,10 +328,7 @@ namespace project
 
         private void RegisterMultipleServices()
         {
-            var confirmResult = MessageBox.Show($"Bạn có chắc muốn đăng ký {dgvAllServices.SelectedRows.Count} dịch vụ đã chọn?\n\n(Lưu ý: Các dịch vụ cần số lượng sẽ được đăng ký với số lượng mặc định là 1)",
-                                                 "Xác nhận đăng ký",
-                                                 MessageBoxButtons.YesNo,
-                                                 MessageBoxIcon.Question);
+            var confirmResult = MessageBox.Show($"Bạn có chắc muốn đăng ký {dgvAllServices.SelectedRows.Count} dịch vụ?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirmResult == DialogResult.Yes)
             {
@@ -308,11 +339,12 @@ namespace project
                         int serviceId = Convert.ToInt32(row.Cells["service_id"].Value);
                         _dataProvider.RegisterService(_userId, serviceId, 1);
                     }
-                    MessageBox.Show("Yêu cầu đăng ký các dịch vụ đã được gửi đi và đang chờ phê duyệt.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Yêu cầu đăng ký các dịch vụ đã được gửi.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMyServices(); // Tải lại danh sách dịch vụ của tôi
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Đã xảy ra lỗi trong quá trình đăng ký: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Đã xảy ra lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
